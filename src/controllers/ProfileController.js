@@ -23,6 +23,34 @@ exports.CreateProfile = (req, res) => {
   });
 };
 
+// User Profile Update
+exports.UpdateProfile = (req, res) => {
+  const userName = req.headers.username;
+  const reqBody = req.body;
+  ProfileModel.updateOne(
+    { userName },
+    { $set: reqBody },
+    { upsert: true },
+    (err, data) => {
+      if (err) {
+        res.status(400).json({
+          status: "fail",
+          data: {
+            error: err,
+          },
+        });
+      } else {
+        res.status(200).json({
+          status: "success",
+          data: {
+            user: data,
+          },
+        });
+      }
+    }
+  );
+};
+
 exports.UserLogin = (req, res) => {
   let { userName, password } = req.body;
   ProfileModel.find({ userName, password }, (err, data) => {

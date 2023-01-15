@@ -5,6 +5,8 @@ const router = express.Router();
 
 // User Registration
 router.post("/profiles", ProfileController.CreateProfile);
+// User Profile Update
+router.put("/profiles", TokenVerify, ProfileController.UpdateProfile);
 // User Login
 router.post("/login", ProfileController.UserLogin);
 // User Login
